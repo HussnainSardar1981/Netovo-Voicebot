@@ -4,6 +4,7 @@ ChromaDB RAG Client for AudioSocket Voicebot
 Lightweight client for retrieving relevant documents from ChromaDB
 """
 
+import os
 import logging
 from typing import List, Dict, Optional
 from pathlib import Path
@@ -57,6 +58,12 @@ class ChromaRAGClient:
         if not self.db_path.exists():
             logger.error(f"ChromaDB path does not exist: {db_path}")
             raise FileNotFoundError(f"ChromaDB path not found: {db_path}")
+
+        # Set up separate temporary directory for ChromaDB to reduce disk usage
+        chroma_temp_dir = Path(os.getenv('CHROMA_TEMP_DIR', '/tmp/chroma_temp'))
+        chroma_temp_dir.mkdir(parents=True, exist_ok=True)
+        os.environ['TMPDIR'] = str(chroma_temp_dir)
+        logger.info(f"ChromaDB temporary directory: {chroma_temp_dir}")
 
         # Initialize ChromaDB client
         try:
