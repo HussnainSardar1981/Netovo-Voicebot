@@ -11,7 +11,12 @@ Directory Structure:
 """
 
 import os
+import platform
 from pathlib import Path
+
+# Detect OS and set default base directory
+IS_WINDOWS = platform.system() == 'Windows'
+DEFAULT_BASE_DIR = 'G:/home/aiadmin/netovo_voicebot' if IS_WINDOWS else '/home/aiadmin/netovo_voicebot'
 
 # Load .env file from main netovo_voicebot directory
 try:
@@ -19,7 +24,7 @@ try:
     # Try to find .env in the base netovo_voicebot directory
     # On Linux: /home/aiadmin/netovo_voicebot/.env
     # On Windows dev: G:/home/aiadmin/netovo_voicebot/.env
-    base_dir = Path(os.getenv('BASE_DIR', 'G:/home/aiadmin/netovo_voicebot'))
+    base_dir = Path(os.getenv('BASE_DIR', DEFAULT_BASE_DIR))
     env_path = base_dir / ".env"
     if env_path.exists():
         load_dotenv(env_path)
@@ -36,7 +41,7 @@ class PathsConfig:
     """Centralized paths for RAG pipeline and voicebot"""
 
     # Base directory: /home/aiadmin/netovo_voicebot
-    BASE_DIR = Path(os.getenv('BASE_DIR', 'G:/home/aiadmin/netovo_voicebot'))
+    BASE_DIR = Path(os.getenv('BASE_DIR', DEFAULT_BASE_DIR))
 
     # RAG directory: /home/aiadmin/netovo_voicebot/rag
     RAG_DIR = BASE_DIR / os.getenv('RAG_SUBDIR', 'rag')
