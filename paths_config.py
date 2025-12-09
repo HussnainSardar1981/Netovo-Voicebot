@@ -58,8 +58,9 @@ class PathsConfig:
     # Temp directory: /home/aiadmin/netovo_voicebot/temp
     TEMP_DIR = Path(os.getenv('TEMP_DIR', BASE_DIR / 'temp'))
 
-    # ChromaDB temp: /home/aiadmin/netovo_voicebot/rag/chroma_temp
-    CHROMA_TEMP_DIR = Path(os.getenv('CHROMA_TEMP_DIR', RAG_DIR / 'chroma_temp'))
+    # ChromaDB temp directory for temporary files (separate from main storage)
+    # This reduces disk usage in main storage location
+    CHROMA_TEMP_DIR = Path(os.getenv('CHROMA_TEMP_DIR', '/tmp/chroma_temp'))
 
     # Vosk model path from environment variable (no default path)
     VOSK_MODEL_PATH = Path(os.getenv('VOSK_MODEL_PATH', BASE_DIR / 'vosk-model-en-us-0.22'))
