@@ -59,8 +59,8 @@ class PathsConfig:
     TEMP_DIR = Path(os.getenv('TEMP_DIR', BASE_DIR / 'temp'))
 
     # ChromaDB temp directory for temporary files (separate from main storage)
-    # This reduces disk usage in main storage location
-    CHROMA_TEMP_DIR = Path(os.getenv('CHROMA_TEMP_DIR', '/tmp/chroma_temp'))
+    # Uses BASE_DIR/temp/chroma_temp since /tmp may not exist on all systems
+    CHROMA_TEMP_DIR = Path(os.getenv('CHROMA_TEMP_DIR', BASE_DIR / 'temp' / 'chroma_temp'))
 
     # Vosk model path from environment variable (no default path)
     VOSK_MODEL_PATH = Path(os.getenv('VOSK_MODEL_PATH', BASE_DIR / 'vosk-model-en-us-0.22'))
